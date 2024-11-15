@@ -63,29 +63,49 @@ public class Student extends User {
         Grade grade = new Grade();
         for (Course course : courses) {
             g=0;
-            if(!assignmentGrade.isEmpty())
-                for (Assignment assignment : assignmentGrade.keySet()) {
-                    if(assignmentGrade.containsKey(assignment.getCourseName()))
-                        g+=assignmentGrade.get(assignment.getCourseName()).getGrade();
+            if(!this.assignmentGrade.isEmpty())
+                for (Assignment assignment : this.assignmentGrade.keySet()) {
+                    if(assignment.getCourseName() == null ? course.getCourseName() == null : assignment.getCourseName().equals(course.getCourseName()))
+                        g+=this.assignmentGrade.get(assignment).getGrade();
             }
-            if(g>0&&g<50)
-                grade=new Grade(g,"F","course");
-            else if(g>=50&&g<60)
-                grade=new Grade(g,"D","course");
-            else if(g>=60&&g<80)
-                grade=new Grade(g,"C","course");
-            else if(g>=80&&g<90)
-                grade=new Grade(g,"B","course");
-            else if(g>=90)
-                grade=new Grade(g,"A","course");
-            else 
-                System.out.println("No assignment Was submitted in this course");
+            else {
+                System.out.println("No assignment Was submitted in this course" + course.getCourseName());
+                return;
+            }
+            if(g>=0&&g<50){
+                grade.setGrade(g);
+                grade.setComment("F");
+                grade.setType("course");
+            }     
+            else if(g>=50&&g<60){
+                grade.setGrade(g);
+                grade.setComment("D");
+                grade.setType("course");
+            }
+            else if(g>=60&&g<80){
+                grade.setGrade(g);
+                grade.setComment("C");
+                grade.setType("course");
+            }
+            else if(g>=80&&g<90){
+                grade.setGrade(g);
+                grade.setComment("B");
+                grade.setType("course");
+            }
+            else if(g>=90){
+                grade.setGrade(g);
+                grade.setComment("A");
+                grade.setType("course");
+            }
+            
             this.courseGrade.put(course, grade);
         }
     }
+    
     // View all assignment grades
     public void viewAssignmentGrades() {
-        System.out.println("Assignment Grades:");
+        System.out.println();
+        System.out.println("Assignment Grades for " + this.getName() + ":" );
         for (HashMap.Entry<Assignment, Grade> entry : assignmentGrade.entrySet()) {
             System.out.println("Assignment: " + entry.getKey().getTitle() + ", Grade: " + entry.getValue().getGrade());
         }
@@ -93,26 +113,27 @@ public class Student extends User {
 
     // View all course grades
     public void viewCourseGrades() {
-        System.out.println("Course Grades:");
+        System.out.println();
+        System.out.println("Course Grades for " + this.getName() + ":" );
         for (HashMap.Entry<Course, Grade> entry : courseGrade.entrySet()) {
-            System.out.println("Course: " + entry.getKey().getCourseName() + ", Grade: " + entry.getValue().getGrade());
+            System.out.println("Course: " + entry.getKey().getCourseName() + ",");
+            entry.getValue().displayGradeDetails();
         }
     }
 
     // View grade for a specific course
     public void viewCourseGrade(Course course) {
+        System.out.println();
+        System.out.println("Course Grades" + course.getCourseName() + " for " + this.getName() + ":" );
         if (courseGrade.containsKey(course)) {
-            System.out.println("Course: " + course.getCourseName() + ", Grade: " + courseGrade.get(course).getGrade());
+            System.out.println("Course: " + course.getCourseName() + ",");
+            courseGrade.get(course).displayGradeDetails();
         } else {
             System.out.println("No grade available for this course.");
         }
     }
 
-//        // Add grade for a course
-//    public void addCourseGrade(Course course, Grade grade) {
-//        courseGrade.put(course, grade);
-//    }
-    
+
     // Enroll the student in a new course
     public void enrollCourse(Course course) {
         courses.add(course);
@@ -120,7 +141,9 @@ public class Student extends User {
 
     // Submit an assignment and add the grade
     public void submitAssignment(Assignment assignment, Course course,Teacher teacher) {
-        teacher.assignGradeOfAssignment(assignment, this);
+        Grade grade=teacher.calculateAssignmentGrade();
+        System.out.println("Assigning grade " + grade.getGrade() + " to student " + this.getName() + " for assignment " + assignment.getTitle());
+        this.assignmentGrade.put(assignment, grade);
     }
 
     // Calculate total price of courses (if there's a price attribute in Course)

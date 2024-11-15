@@ -9,14 +9,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.mycompany.coursemanagement.Course;
-import com.mycompany.coursemanagement.Notice;
-import com.mycompany.coursemanagement.Student;
-import com.mycompany.coursemanagement.Teacher;
 
 public class Admin extends User {
     // Static lists to hold all instLocalTimeances of teachers, students, courses, and notices
@@ -29,24 +26,27 @@ public class Admin extends User {
     public Admin(String name, String email, String password) {
         super(name, email, password);
     }
-
+    
+    // Getter All students registered in the Course-Management-System
     public static ArrayList<Student> getStudents() {
         return students;
     }
-
+    
+    // Getter All teachers registered in the course-management-system
     public static ArrayList<Teacher> getTeachers() {
         return teachers;
     }
 
+    // Getter all the courses in the course-management-system
     public static ArrayList<Course> getCourses() {
         return courses;
     }
 
+    // Getter All notices in the course-management-system
     public static ArrayList<Notice> getNotices() {
         return notices;
     }
-
-    
+   
    // Add a new student
     public void addStudent(Student student) {
         students.add(student);
@@ -91,6 +91,7 @@ public class Admin extends User {
     // Set students for a course
     public void setStudentsOfCourse(Course course, Student student) {
         course.enrollStudent(student); // Assuming Course class has an enrollStudent method
+        student.enrollCourse(course);
     }
 
     // Set the price of a course
@@ -99,18 +100,13 @@ public class Admin extends User {
     }
 
     // Set the time period of a course
-    public void setTimePeriod(Course course, LocalTime timePeriod) {
+    public void setTimePeriod(Course course, String timePeriod) {
         course.setTimePeriod(timePeriod); // Assuming Course class has a setTimePeriod method
-    }
-
-    // Set a notice for a course
-    public void setNoticeOfCourse(Course course, Notice notice) {
-        course.addNotice(notice); // Assuming Course class has an addNotice method
     }
 
     // Add a new notice
     public void addNotice(Notice notice, Course course) {
-        notices.add(notice);
+        notices.add(notice);// Assuming Course class has an addNotice method
         course.addNotice(notice);
     }
 
@@ -130,7 +126,7 @@ public class Admin extends User {
     }
 
     // Set the date of a notice
-    public void setDateOfNotice(Notice notice, Date date) {
+    public void setDateOfNotice(Notice notice, LocalDate date) {
         notice.setDate(date); // Assuming Notice class has a setDate method
     }
 
@@ -165,6 +161,7 @@ public class Admin extends User {
             System.out.println(notice.getTitle());
         }
     }
+    
     @Override
     public void logIn(String email,String password){
         FileManagement fileManager = new FileManagement();

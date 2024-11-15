@@ -1,0 +1,2 @@
+Mathematics,Mr. Smith,teacher123,smith@example.com,Mathematics,Algebra and Calculus,200.0,three months
+Physics,Ms. Johnson,teacher456,johnson@example.com,Physics,Mechanics and Thermodynamics,250.0,three months
