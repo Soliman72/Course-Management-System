@@ -97,18 +97,18 @@ public class Coursemanagement {
             }
         });
 
-List<Student> studentsFromFile = fileManager.readFromFile("students.txt", line -> {
-    String[] parts = line.split(",");
+        List<Student> studentsFromFile = fileManager.readFromFile("students.txt", line -> {
+        String[] parts = line.split(",");
     
-    // Ensure the data has exactly 3 parts (name, email, password)
-    if (parts.length == 3) {
-        return new Student(parts[0], parts[1], parts[2]);
-    } else {
-        // Log error message for invalid data
-        System.err.println("Invalid student data: " + Arrays.toString(parts));
-        return null;  // Handle invalid data (e.g., skip this entry)
-    }
-});
+        // Ensure the data has exactly 3 parts (name, email, password)
+        if (parts.length == 3) {
+            return new Student(parts[0], parts[1], parts[2]);
+        } else {
+            // Log error message for invalid data
+            System.err.println("Invalid student data: " + Arrays.toString(parts));
+            return null;  // Handle invalid data (e.g., skip this entry)
+        }
+        });
 
 
         List<Course> coursesFromFile = fileManager.readFromFile("courses.txt", line -> {
