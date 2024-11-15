@@ -11,7 +11,7 @@ import java.util.function.Function;
 public class FileManagement {
 
     // Generic method to write a list of objects to a file
-    public <T> void writeToFile(List<T> objects, String filename, Function<T, String> objectToString) throws IOException {
+    public <T> void writeToFile(ArrayList<T> objects, String filename, Function<T, String> objectToString) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
         for (T object : objects) {
             writer.write(objectToString.apply(object));
@@ -21,8 +21,8 @@ public class FileManagement {
     }
 
     // Generic method to read a list of objects from a file
-    public <T> List<T> readFromFile(String filename, Function<String, T> stringToObject) throws IOException {
-        List<T> objects = new ArrayList<>();
+    public <T> ArrayList<T> readFromFile(String filename, Function<String, T> stringToObject) throws IOException {
+        ArrayList<T> objects = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(filename));
         String line;
         while ((line = reader.readLine()) != null) {

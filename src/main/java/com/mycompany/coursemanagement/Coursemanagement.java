@@ -40,16 +40,18 @@ public class Coursemanagement {
         admin1.addCourse(mathCourse);
         admin1.addCourse(physicsCourse);
 
+        
         // Step 5: Enroll students in courses
-        student1.enrollCourse(mathCourse); // John enrolls in Math
-        student2.enrollCourse(mathCourse); // Jane enrolls in Math
-        student3.enrollCourse(physicsCourse); // Michael enrolls in Physics
-        student4.enrollCourse(physicsCourse); // Sarah enrolls in Physics
+        admin1.setStudentsOfCourse(mathCourse, student1);// John enrolls in Math
+        admin1.setStudentsOfCourse(mathCourse, student2);// Jane enrolls in Math
+        admin1.setStudentsOfCourse(physicsCourse, student3); // Michael enrolls in Physics
+        admin1.setStudentsOfCourse(physicsCourse, student4); // Sarah enrolls in Physics
 
         // Admin assigns the teacher to the course
-        admin1.setTeacherOfCourse(mathCourse, teacher1);
-        admin1.setTeacherOfCourse(physicsCourse, teacher2);
+//        admin1.setTeacherOfCourse(mathCourse, teacher1);
+//        admin1.setTeacherOfCourse(physicsCourse, teacher2);
 
+        
         // Step 6: Create Assignments
         Assignment mathAssignment1 = new Assignment(1, "Solve Algebra Problems", "Algebra Assignment", new Date());
         Assignment physicsAssignment1 = new Assignment(2, "Mechanics Problems", "Physics Assignment", new Date());
@@ -59,35 +61,44 @@ public class Coursemanagement {
         physicsCourse.addAssignment(physicsAssignment1);
 
         // Step 7: Teachers assign grades to students for assignments
-        Grade grade1 = new Grade(90, "Well done", "Assignment");
-        Grade grade2 = new Grade(85, "Good Job", "Assignment");
-        Grade grade3 = new Grade(95, "Excellent", "Assignment");
-        Grade grade4 = new Grade(80, "Well done", "Assignment");
+//        Grade grade1 = new Grade(90, "Well done", "Assignment");
+//        Grade grade2 = new Grade(85, "Good Job", "Assignment");
+//        Grade grade3 = new Grade(95, "Excellent", "Assignment");
+//        Grade grade4 = new Grade(80, "Well done", "Assignment");
 
         // Teacher assigns grades to students
-        teacher1.assignGrade(mathAssignment1, grade1, student1);
-        teacher1.assignGrade(mathAssignment1, grade2, student2);
-        teacher2.assignGrade(physicsAssignment1, grade3, student3);
-        teacher2.assignGrade(physicsAssignment1, grade4, student4);
-
+//        teacher1.assignGrade(mathAssignment1, student1);
+//        teacher1.assignGrade(mathAssignment1, student2);
+//        teacher2.assignGrade(physicsAssignment1, student3);
+//        teacher2.assignGrade(physicsAssignment1, student4);
+        student1.submitAssignment(mathAssignment1, mathCourse, teacher1);
+        student2.submitAssignment(mathAssignment1, mathCourse, teacher1);
+        student3.submitAssignment(physicsAssignment1, physicsCourse, teacher2);
+        student4.submitAssignment(physicsAssignment1, physicsCourse, teacher2);
+        
         // Optional: Set course grade for students (based on performance)
-        Grade mathCourseGrade1 = new Grade(88, "Excellent work in Math", "Course");
-        Grade mathCourseGrade2 = new Grade(78, "Good work in Math", "Course");
-        Grade physicsCourseGrade1 = new Grade(92, "Outstanding in Physics", "Course");
-        Grade physicsCourseGrade2 = new Grade(85, "Good in Physics", "Course");
+//        Grade mathCourseGrade1 = new Grade(88, "Excellent work in Math", "Course");
+//        Grade mathCourseGrade2 = new Grade(78, "Good work in Math", "Course");
+//        Grade physicsCourseGrade1 = new Grade(92, "Outstanding in Physics", "Course");
+//        Grade physicsCourseGrade2 = new Grade(85, "Good in Physics", "Course");
 
-        student1.addCourseGrade(mathCourse, mathCourseGrade1);
-        student2.addCourseGrade(mathCourse, mathCourseGrade2);
-        student3.addCourseGrade(physicsCourse, physicsCourseGrade1);
-        student4.addCourseGrade(physicsCourse, physicsCourseGrade2);
-
+//        student1.addCourseGrade(mathCourse, mathCourseGrade1);
+//        student2.addCourseGrade(mathCourse, mathCourseGrade2);
+//        student3.addCourseGrade(physicsCourse, physicsCourseGrade1);
+//        student4.addCourseGrade(physicsCourse, physicsCourseGrade2);
+        
+        teacher1.assignGradeOfCourses(student1);
+        teacher1.assignGradeOfCourses(student2);
+        teacher2.assignGradeOfCourses(student3);
+        teacher2.assignGradeOfCourses(student4);
+        
         // Step 8: Save data to files using FileManagement
         fileManager.writeToFile(Admin.getTeachers(), "teachers.txt", teacher -> teacher.getName() + "," + teacher.getEmail() + "," + teacher.getSpecialty());
-        fileManager.writeToFile(Admin.getStudents(), "students.txt", student -> student.getName() + "," + student.getEmail());
+        fileManager.writeToFile(Admin.getStudents(), "students.txt", student -> student.getName() + "," + student.getEmail()+ "," + student.getPassword());
         fileManager.writeToFile(Admin.getCourses(), "courses.txt", course -> course.getCourseName() + "," + course.getDescription() + "," + course.getPrice() + "," + course.getTimePeriod());
 
         // Step 9: Read data from files using FileManagement
-        List<Teacher> teachersFromFile = fileManager.readFromFile("teachers.txt", line -> {
+        ArrayList<Teacher> teachersFromFile = fileManager.readFromFile("teachers.txt", line -> {
             String[] parts = line.split(",");
             if (parts.length >= 3) {
                 return new Teacher(parts[0], parts[1], parts[2], parts[2]);
@@ -97,21 +108,21 @@ public class Coursemanagement {
             }
         });
 
-        List<Student> studentsFromFile = fileManager.readFromFile("students.txt", line -> {
-        String[] parts = line.split(",");
-    
-        // Ensure the data has exactly 3 parts (name, email, password)
-        if (parts.length == 3) {
-            return new Student(parts[0], parts[1], parts[2]);
-        } else {
-            // Log error message for invalid data
-            System.err.println("Invalid student data: " + Arrays.toString(parts));
-            return null;  // Handle invalid data (e.g., skip this entry)
-        }
+        ArrayList<Student> studentsFromFile = fileManager.readFromFile("students.txt", line -> {
+            String[] parts = line.split(",");
+
+            // Ensure the data has exactly 3 parts (name, email, password)
+            if (parts.length >0) {
+                return new Student(parts[0], parts[1], parts[2]);
+            } else {
+                // Log error message for invalid data
+                System.err.println("Invalid student data: " + Arrays.toString(parts));
+                return null;  // Handle invalid data (e.g., skip this entry)
+            }
         });
 
 
-        List<Course> coursesFromFile = fileManager.readFromFile("courses.txt", line -> {
+        ArrayList<Course> coursesFromFile = fileManager.readFromFile("courses.txt", line -> {
             String[] parts = line.split(",");
             if (parts.length >= 4) {
                 return new Course(parts[0], null, parts[1], Double.parseDouble(parts[2]), LocalTime.parse(parts[3]));
