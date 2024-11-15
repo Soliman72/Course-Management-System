@@ -74,9 +74,11 @@ public class Coursemanagement {
         teacher1.addAssignmentOfCourse(mathAssignment1, mathCourse);
         teacher2.addAssignmentOfCourse(physicsAssignment1, physicsCourse);
         //store assignment information
-        fileManager.writeToFile(mathCourse.getAssignments(), "assignments.txt", assignment -> assignment.objectToString());
-        fileManager.writeToFile(physicsCourse.getAssignments(), "assignments.txt", assignment -> assignment.objectToString());
-
+        ArrayList<Assignment> assignments = new ArrayList<>();
+        assignments.add(mathAssignment1);
+        assignments.add(physicsAssignment1);
+        fileManager.writeToFile(assignments, "assignments.txt", assignment -> assignment.objectToString());
+        
         // login to the website to submit assignments
         student1.logIn(student1.getEmail(), student1.getPassword());
         student2.logIn(student2.getEmail(), student2.getPassword());
