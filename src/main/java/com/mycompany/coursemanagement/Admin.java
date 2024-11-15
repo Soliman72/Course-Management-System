@@ -5,34 +5,44 @@
 package com.mycompany.coursemanagement;
 
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import com.mycompany.coursemanagement.Course;
+import com.mycompany.coursemanagement.Notice;
+import com.mycompany.coursemanagement.Student;
+import com.mycompany.coursemanagement.Teacher;
 
 public class Admin extends User {
-    // Static lists to hold all instances of teachers, students, courses, and notices
-    public static List<Teacher> teachers = new ArrayList<>();
-    private static List<Student> students = new ArrayList<>();
-    private static List<Course> courses = new ArrayList<>();
-    private static List<Notice> notices = new ArrayList<>();
+    // Static lists to hold all instLocalTimeances of teachers, students, courses, and notices
+    public static ArrayList<Teacher> teachers = new ArrayList<>();
+    private static ArrayList<Student> students = new ArrayList<>();
+    private static ArrayList<Course> courses = new ArrayList<>();
+    private static ArrayList<Notice> notices = new ArrayList<>();
 
     // Constructor
     public Admin(String name, String email, String password) {
         super(name, email, password);
     }
 
-    public static List<Student> getStudents() {
+    public static ArrayList<Student> getStudents() {
         return students;
     }
 
-    public static List<Teacher> getTeachers() {
+    public static ArrayList<Teacher> getTeachers() {
         return teachers;
     }
 
-    public static List<Course> getCourses() {
+    public static ArrayList<Course> getCourses() {
         return courses;
     }
 
-    public static List<Notice> getNotices() {
+    public static ArrayList<Notice> getNotices() {
         return notices;
     }
 
@@ -153,6 +163,62 @@ public class Admin extends User {
         System.out.println("List of Notices:");
         for (Notice notice : notices) {
             System.out.println(notice.getTitle());
+        }
+    }
+    @Override
+    public void logIn(String email,String password){
+        FileManagement fileManager = new FileManagement();
+        try {
+            ArrayList<Admin> admins = fileManager.readFromFile("admins.txt", line -> {
+                String[] parts = line.split(",");
+                
+                // Ensure the data has exactly 3 parts (name, email, password)
+                if (parts.length >0) {
+                    return new Admin(parts[0], parts[1], parts[2]);
+                } else {
+                    // Log error message for invalid data
+                    System.err.println("Invalid admin data: " + Arrays.toString(parts));
+                    return null;  // Handle invalid data (e.g., skip this entry)
+                }
+                
+            }); 
+            for(Admin admin : admins){
+                if((email == null ? admin.getEmail() == null : email.equals(admin.getEmail()))&&(password == null ? admin.getPassword() == null : password.equals(admin.getPassword())))
+                    System.out.println(admin.getName()+"Logged in");
+                else
+                    System.out.println("Incorrect Email or Password");
+            }
+        }catch (IOException ex) {
+            Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void logOut(){
+        FileManagement fileManager = new FileManagement();
+        try {
+            ArrayList<Admin> admins = fileManager.readFromFile("admins.txt", line -> {
+                String[] parts = line.split(",");
+                
+                // Ensure the data has exactly 3 parts (name, email, password)
+                if (parts.length >0) {
+                    return new Admin(parts[0], parts[1], parts[2]);
+                } else {
+                    // Log error message for invalid data
+                    System.err.println("Invalid admin data: " + Arrays.toString(parts));
+                    return null;  // Handle invalid data (e.g., skip this entry)
+                }
+            }); 
+            for(Admin admin : admins){
+                if(this.equals(admin))
+                    admins.remove(this);
+            }
+            File file = new File("admins.txt");
+            if (file.exists())
+                file.delete();
+            fileManager.writeToFile(admins, "admins.txt", admin -> admin.objectToString());
+        }catch (IOException ex) {
+            Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

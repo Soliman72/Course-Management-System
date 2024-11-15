@@ -14,20 +14,22 @@ public class Course {
     private String description;
     private double price;
     private LocalTime timePeriod;
-    private List<Student> students;
-    private List<Assignment> assignments;
-    private List<Notice> notices;
+    private ArrayList<Student> students;
+    private ArrayList<Assignment> assignments;
+    private ArrayList<Notice> notices;
 
     // Constructor
     public Course(String name, Teacher teacher, String description, double price, LocalTime timePeriod) {
         this.name = name;
         this.teacher = teacher;
+        
         this.description = description;
         this.price = price;
         this.timePeriod = timePeriod;
         this.students = new ArrayList<>();
         this.assignments = new ArrayList<>();
         this.notices = new ArrayList<>();
+//        teacher.addCourses(this);
     }
 
     // Setters and Getters

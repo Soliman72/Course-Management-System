@@ -12,6 +12,7 @@ public class Assignment {
     private String description;
     private String title;
     private Date deadline;
+    private String courseName;
 
     // Constructor
     public Assignment(int ID, String description, String title, Date deadline) {
@@ -38,6 +39,10 @@ public class Assignment {
         return deadline;
     }
 
+    public String getCourseName() {
+        return courseName;
+    }
+    
     // Display assignment details
     public void displayAssignmentDetails() {
         System.out.println("Assignment ID: " + ID);

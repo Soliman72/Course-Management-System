@@ -12,6 +12,7 @@ public class Grade {
     private String type;
 
     // Constructor
+    public Grade(){}
     public Grade(int grade, String comment, String type) {
         this.grade = grade;
         this.comment = comment;
