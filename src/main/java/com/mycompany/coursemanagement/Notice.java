@@ -4,20 +4,20 @@
  */
 package com.mycompany.coursemanagement;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Notice {
     // Attributes
+    private String courseName;
     private String title;
     private String content;
-    private String courseName;
-    private Date date;
+    private LocalDate date;
 
     // Constructor
-    public Notice(String title, String content, String courseName, Date date) {
+    public Notice(String courseName, String title, String content, LocalDate date) {
+        this.courseName = courseName;
         this.title = title;
         this.content = content;
-        this.courseName = courseName;
         this.date = date;
     }
 
@@ -34,10 +34,11 @@ public class Notice {
         return courseName;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
-
+    
+    //Setters
     public void setTitle(String title) {
         this.title = title;
     }
@@ -50,8 +51,16 @@ public class Notice {
         this.courseName = courseName;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    //Display the ad content
+    public void displayDitals() {
+        System.out.println("Notice{" + "title=" + title + ", content=" + content + ", courseName=" + courseName + ", date=" + date +" '}'");
+    }
     
+    public String objectToString(){
+        return this.courseName + "," + this.title + "," + this.content + "," + this.date;
+    }
 }

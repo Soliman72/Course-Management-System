@@ -51,8 +51,6 @@ public class Grade {
 
     // Display grade details
     public void displayGradeDetails() {
-        System.out.println("Grade: " + grade);
-        System.out.println("Comment: " + comment);
-        System.out.println("Type: " + type);
+        System.out.println("Grade: " + grade + " - Comment: " + comment + " - Type: " + type);
     }
 }

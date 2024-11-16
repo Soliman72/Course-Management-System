@@ -1,7 +1,7 @@
 package com.mycompany.coursemanagement;
 
 import java.io.IOException;
-import java.time.LocalTime;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Coursemanagement {
@@ -11,92 +11,118 @@ public class Coursemanagement {
 
         // Step 1: Create Admin
         Admin admin1 = new Admin("Admin User", "admin@example.com", "admin123");
-
+        //Store admin information
+        fileManager.writeSingleObjectToFile(admin1, "admins.txt", admin -> admin.objectToString());
+        
         // Step 2: Create Teachers
-        Teacher teacher1 = new Teacher("Mr. Smith", "teacher123", "smith@example.com", "Mathematics");
-        Teacher teacher2 = new Teacher("Ms. Johnson", "teacher456", "johnson@example.com", "Physics");
-
+        Teacher teacher1 = new Teacher("Mr. Smith", "smith@example.com", "teacher123", "Mathematics");
+        Teacher teacher2 = new Teacher("Ms. Johnson", "johnson@example.com",  "teacher456", "Physics");
+        
         // Add teachers using Admin
         admin1.addTeacher(teacher1);
         admin1.addTeacher(teacher2);
+        //Storing teachers' information
+        fileManager.writeToFile(Admin.getTeachers(), "teachers.txt", teacher -> teacher.objectToString());
 
         // Step 3: Create Students
-        Student student1 = new Student("John Doe", "student123", "john@example.com");
-        Student student2 = new Student("Jane Roe", "student456", "jane@example.com");
-        Student student3 = new Student("Michael Blue", "student789", "michael@example.com");
-        Student student4 = new Student("Sarah White", "student101", "sarah@example.com");
-
+        Student student1 = new Student("John Doe", "john@example.com", "johndoe123");
+        Student student2 = new Student("Jane Roe", "jane@example.com", "janeroe456");
+        Student student3 = new Student("Michael Blue", "michael@example.com", "michaelblue789");
+        Student student4 = new Student("Sarah White", "sarah@example.com", "sarahwhite101");
         // Add students using Admin
         admin1.addStudent(student1);
         admin1.addStudent(student2);
         admin1.addStudent(student3);
         admin1.addStudent(student4);
+        //Storing students' information
+        fileManager.writeToFile(Admin.getStudents(), "students.txt", student -> student.objectToString());
 
         // Step 4: Create Courses
-        Course mathCourse = new Course("Mathematics", teacher1, "Algebra and Calculus", 200.0, LocalTime.of(10, 0));
-        Course physicsCourse = new Course("Physics", teacher2, "Mechanics and Thermodynamics", 250.0, LocalTime.of(14, 0));
-
+        Course mathCourse = new Course("Mathematics", teacher1, "Algebra and Calculus", 200.0, "three months");
+        Course physicsCourse = new Course("Physics", teacher2, "Mechanics and Thermodynamics", 250.0, "three months");
+        //Defining the course to the teacher
+        teacher1.addCourses(mathCourse);
+        teacher2.addCourses(physicsCourse);
         // Add courses using Admin
         admin1.addCourse(mathCourse);
         admin1.addCourse(physicsCourse);
-
+        //store information for courses
+        fileManager.writeToFile(Admin.getCourses(), "courses.txt", course -> course.objectToString());
         
         // Step 5: Enroll students in courses
         admin1.setStudentsOfCourse(mathCourse, student1);// John enrolls in Math
         admin1.setStudentsOfCourse(mathCourse, student2);// Jane enrolls in Math
+        admin1.setStudentsOfCourse(mathCourse, student4); // Sarah enrolls in Math
+        admin1.setStudentsOfCourse(physicsCourse, student2);// Jane enrolls in Physics
         admin1.setStudentsOfCourse(physicsCourse, student3); // Michael enrolls in Physics
         admin1.setStudentsOfCourse(physicsCourse, student4); // Sarah enrolls in Physics
-
-        // Admin assigns the teacher to the course
-//        admin1.setTeacherOfCourse(mathCourse, teacher1);
-//        admin1.setTeacherOfCourse(physicsCourse, teacher2);
-
         
         // Step 6: Create Assignments
-        Assignment mathAssignment1 = new Assignment(1, "Solve Algebra Problems", "Algebra Assignment", new Date());
-        Assignment physicsAssignment1 = new Assignment(2, "Mechanics Problems", "Physics Assignment", new Date());
-
+        Assignment mathAssignment1 = new Assignment(
+                "Mathematics", // Course Name
+                "Algebra Assignment", // Title
+                "Solve Algebra Problems", // Description
+                15 // Deadline after 2 weaks
+        );
+        Assignment physicsAssignment1 = new Assignment(
+                "Physics", // Course Name
+                "Physics Assignment", // Title
+                "Mechanics Problems", // Description
+                30 // Deadline after month
+        );
         // Add assignments to courses
-        mathCourse.addAssignment(mathAssignment1);
-        physicsCourse.addAssignment(physicsAssignment1);
-
-        // Step 7: Teachers assign grades to students for assignments
-//        Grade grade1 = new Grade(90, "Well done", "Assignment");
-//        Grade grade2 = new Grade(85, "Good Job", "Assignment");
-//        Grade grade3 = new Grade(95, "Excellent", "Assignment");
-//        Grade grade4 = new Grade(80, "Well done", "Assignment");
-
-        // Teacher assigns grades to students
-//        teacher1.assignGrade(mathAssignment1, student1);
-//        teacher1.assignGrade(mathAssignment1, student2);
-//        teacher2.assignGrade(physicsAssignment1, student3);
-//        teacher2.assignGrade(physicsAssignment1, student4);
+        teacher1.addAssignmentOfCourse(mathAssignment1, mathCourse);
+        teacher2.addAssignmentOfCourse(physicsAssignment1, physicsCourse);
+        //store assignment information
+        ArrayList<Assignment> assignments = new ArrayList<>();
+        assignments.add(mathAssignment1);
+        assignments.add(physicsAssignment1);
+        fileManager.writeToFile(assignments, "assignments.txt", assignment -> assignment.objectToString());
+        
+        // login to the website to submit assignments
+        student1.logIn(student1.getEmail(), student1.getPassword());
+        student2.logIn(student2.getEmail(), student2.getPassword());
+        student3.logIn(student3.getEmail(), student3.getPassword());
+        student4.logIn(student4.getEmail(), student4.getPassword());
+        // Step 7: Submitting assignment and giving grades by teachers if the student is registered for the course
         student1.submitAssignment(mathAssignment1, mathCourse, teacher1);
         student2.submitAssignment(mathAssignment1, mathCourse, teacher1);
+        student4.submitAssignment(mathAssignment1, mathCourse, teacher1);
+        student2.submitAssignment(physicsAssignment1, physicsCourse, teacher2);
         student3.submitAssignment(physicsAssignment1, physicsCourse, teacher2);
         student4.submitAssignment(physicsAssignment1, physicsCourse, teacher2);
+        //student1.getAssignmentGrade().forEach((key, value) -> System.out.println(key.getCourseName() + value.getGrade()));
         
         // Optional: Set course grade for students (based on performance)
-//        Grade mathCourseGrade1 = new Grade(88, "Excellent work in Math", "Course");
-//        Grade mathCourseGrade2 = new Grade(78, "Good work in Math", "Course");
-//        Grade physicsCourseGrade1 = new Grade(92, "Outstanding in Physics", "Course");
-//        Grade physicsCourseGrade2 = new Grade(85, "Good in Physics", "Course");
-
-//        student1.addCourseGrade(mathCourse, mathCourseGrade1);
-//        student2.addCourseGrade(mathCourse, mathCourseGrade2);
-//        student3.addCourseGrade(physicsCourse, physicsCourseGrade1);
-//        student4.addCourseGrade(physicsCourse, physicsCourseGrade2);
-        
         teacher1.assignGradeOfCourses(student1);
         teacher1.assignGradeOfCourses(student2);
         teacher2.assignGradeOfCourses(student3);
         teacher2.assignGradeOfCourses(student4);
+        //student1.getCourseGrade().forEach((key, value) -> System.out.println(key.getCourseName() + value.getGrade()));
         
-        // Step 8: Save data to files using FileManagement
-        fileManager.writeToFile(Admin.getTeachers(), "teachers.txt", teacher -> teacher.getName() + "," + teacher.getEmail() + "," + teacher.getSpecialty());
-        fileManager.writeToFile(Admin.getStudents(), "students.txt", student -> student.getName() + "," + student.getEmail()+ "," + student.getPassword());
-        fileManager.writeToFile(Admin.getCourses(), "courses.txt", course -> course.getCourseName() + "," + course.getDescription() + "," + course.getPrice() + "," + course.getTimePeriod());
-
+        // step 8: Create Notices
+        Notice mathNotice = new Notice(
+                "Mathematics",
+                "Math Course Enrollment Announcement",
+                "We are pleased to announce the launch of an advanced Math course for all levels. " +
+                "The course will begin on Sunday, November 20, 2024, and will cover topics such as Calculus, Algebra, and Geometry. " +
+                "The course will be conducted online, and study materials will be provided via our online learning platform.",
+                LocalDate.now()
+        );
+        Notice physicsNotice = new Notice(
+                "Physics",
+                "Physics Course Enrollment Announcement",
+                "We are excited to announce the start of an Advanced Physics course for students at all levels. " +
+                "The course will begin on Saturday, November 22, 2024, and will cover topics including Mechanics, Thermodynamics, " +
+                "and Electromagnetism. The course will be held online and all course materials will be available on our e-learning platform.",
+                LocalDate.now()
+        );
+        //Adding notices to the course and admin information
+        admin1.addNotice(mathNotice, mathCourse);
+        admin1.addNotice(physicsNotice, physicsCourse);
+        //Storing notification data
+        fileManager.writeToFile(Admin.getNotices(), "notices.txt", notice -> notice.objectToString());
+        
         // Step 9: Read data from files using FileManagement
         ArrayList<Teacher> teachersFromFile = fileManager.readFromFile("teachers.txt", line -> {
             String[] parts = line.split(",");
@@ -107,7 +133,6 @@ public class Coursemanagement {
                 return null;  // Or handle the error in a way that suits your logic
             }
         });
-
         ArrayList<Student> studentsFromFile = fileManager.readFromFile("students.txt", line -> {
             String[] parts = line.split(",");
 
@@ -120,12 +145,10 @@ public class Coursemanagement {
                 return null;  // Handle invalid data (e.g., skip this entry)
             }
         });
-
-
         ArrayList<Course> coursesFromFile = fileManager.readFromFile("courses.txt", line -> {
             String[] parts = line.split(",");
-            if (parts.length >= 4) {
-                return new Course(parts[0], null, parts[1], Double.parseDouble(parts[2]), LocalTime.parse(parts[3]));
+            if (parts.length > 0) {
+                return new Course(parts[0], new Teacher(parts[1], parts[2], parts[3], parts[4]),parts[5], Double.parseDouble(parts[6]), parts[7]);
             } else {
                 System.err.println("Invalid course data: " + Arrays.toString(parts));
                 return null;  // Or handle the error in a way that suits your logic
@@ -133,20 +156,21 @@ public class Coursemanagement {
         });
 
         // Display the loaded data
+        //Print teachers' data from the file
         System.out.println("\nTeachers loaded from file:");
         for (Teacher teacher : teachersFromFile) {
             if (teacher != null) {
                 System.out.println(teacher.getName() + " - " + teacher.getSpecialty());
             }
         }
-
+        //Print students' data from the file
         System.out.println("\nStudents loaded from file:");
         for (Student student : studentsFromFile) {
             if (student != null) {
                 System.out.println(student.getName() + " - " + student.getEmail());
             }
         }
-
+        //Print courses' data from the file
         System.out.println("\nCourses loaded from file:");
         for (Course course : coursesFromFile) {
             if (course != null) {
@@ -162,20 +186,16 @@ public class Coursemanagement {
         physicsCourse.viewCourseDetails();  // View course details directly from the Course class
 
         // Display grades of students for assignments and courses
-        System.out.println("\nGrades for students in Mathematics course:");
+        System.out.println("\nAssignment grades for students :");
         student1.viewAssignmentGrades();
         student2.viewAssignmentGrades();
-
-        System.out.println("\nGrades for students in Physics course:");
         student3.viewAssignmentGrades();
         student4.viewAssignmentGrades();
 
         // Display course grades
-        System.out.println("\nCourse grades for Mathematics course:");
+        System.out.println("\nCourse grades for students :");
         student1.viewCourseGrades();
         student2.viewCourseGrades();
-
-        System.out.println("\nCourse grades for Physics course:");
         student3.viewCourseGrades();
         student4.viewCourseGrades();
     }

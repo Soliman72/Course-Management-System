@@ -4,7 +4,7 @@
  */
 package com.mycompany.coursemanagement;
 
-import java.time.LocalTime;
+
 import java.util.*;
 
 public class Course {
@@ -13,23 +13,21 @@ public class Course {
     private Teacher teacher;
     private String description;
     private double price;
-    private LocalTime timePeriod;
+    private String timePeriod;
     private ArrayList<Student> students;
     private ArrayList<Assignment> assignments;
     private ArrayList<Notice> notices;
 
     // Constructor
-    public Course(String name, Teacher teacher, String description, double price, LocalTime timePeriod) {
+    public Course(String name, Teacher teacher, String description, double price, String timePeriod) {
         this.name = name;
         this.teacher = teacher;
-        
         this.description = description;
         this.price = price;
         this.timePeriod = timePeriod;
         this.students = new ArrayList<>();
         this.assignments = new ArrayList<>();
         this.notices = new ArrayList<>();
-//        teacher.addCourses(this);
     }
 
     // Setters and Getters
@@ -64,22 +62,22 @@ public class Course {
         this.price = price;
     }
 
-    public LocalTime getTimePeriod() {
+    public String getTimePeriod() {
         return timePeriod;
     }
-    public void setTimePeriod(LocalTime timePeriod) {
+    public void setTimePeriod(String timePeriod) {
         this.timePeriod =  timePeriod;
     }
 
-    public List<Student> getStudents() {
+    public ArrayList<Student> getStudents() {
         return students;
     }
 
-    public List<Assignment> getAssignments() {
+    public ArrayList<Assignment> getAssignments() {
         return assignments;
     }
 
-    public List<Notice> getNotices() {
+    public ArrayList<Notice> getNotices() {
         return notices;
     }
 
@@ -148,34 +146,38 @@ public class Course {
         }
     }
 
-    // Additional method: Remove a student from the course
-//    public void removeStudent(Student student) {
-//        if (students.contains(student)) {
-//            students.remove(student);
-//            System.out.println(student.getName() + " has been removed from the course: " + name);
-//        } else {
-//            System.out.println(student.getName() + " is not enrolled in this course.");
-//        }
-//    }
+    //Remove a student from the course
+    public void removeStudent(Student student) {
+        if (students.contains(student)) {
+            students.remove(student);
+            System.out.println(student.getName() + " has been removed from the course: " + name);
+        } else {
+            System.out.println(student.getName() + " is not enrolled in this course.");
+        }
+    }
 
-    // Additional method: Remove an assignment from the course
-//    public void removeAssignment(Assignment assignment) {
-//        if (assignments.contains(assignment)) {
-//            assignments.remove(assignment);
-//            System.out.println("Assignment: " + assignment.getTitle() + " has been removed from the course: " + name);
-//        } else {
-//            System.out.println("Assignment: " + assignment.getTitle() + " is not part of this course.");
-//        }
-//    }
+    //Remove an assignment from the course
+    public void removeAssignment(Assignment assignment) {
+        if (assignments.contains(assignment)) {
+            assignments.remove(assignment);
+            System.out.println("Assignment: " + assignment.getTitle() + " has been removed from the course: " + name);
+        } else {
+            System.out.println("Assignment: " + assignment.getTitle() + " is not part of this course.");
+        }
+    }
 
-    // Additional method: Remove a notice from the course
-//    public void removeNotice(Notice notice) {
-//        if (notices.contains(notice)) {
-//            notices.remove(notice);
-//            System.out.println("Notice: " + notice.getTitle() + " has been removed from the course: " + name);
-//        } else {
-//            System.out.println("Notice: " + notice.getTitle() + " is not part of this course.");
-//        }
-//    }
+    //Remove a notice from the course
+    public void removeNotice(Notice notice) {
+        if (notices.contains(notice)) {
+            notices.remove(notice);
+            System.out.println("Notice: " + notice.getTitle() + " has been removed from the course: " + name);
+        } else {
+            System.out.println("Notice: " + notice.getTitle() + " is not part of this course.");
+        }
+    }
+    //name teacher description price timePeriod
+    public String objectToString() {
+        return this.name + "," + this.teacher.getName() + "," + this.teacher.getEmail() + "," + this.teacher.getPassword() + "," + this.teacher.getSpecialty() + "," + this.description + "," + this.price + "," + this.timePeriod;
+    }
 }
 

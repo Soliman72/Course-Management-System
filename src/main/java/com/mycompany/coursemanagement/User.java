@@ -13,10 +13,10 @@ public abstract class User {
     private String email;
     
     //constructor
-    public User(String name, String password, String email) {
+    public User(String name, String email, String password) {
         this.name = name;
-        this.password = password;
         this.email = email;
+        this.password = password;
     }
     
     //setter and getters

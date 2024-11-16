@@ -6,7 +6,8 @@ package com.mycompany.coursemanagement;
 
 import java.io.File;
 import java.io.IOException;
-import static java.lang.Math.round;
+import static java.lang.Math.random;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,10 +34,6 @@ public class Teacher extends User {
     public String getSpecialty() {
         return specialty;
     }
-
-    public void addCourses(Course course) {
-        this.courses.add(course);
-    }
     
     // Get the teacher's ID
     public int getID() {
@@ -48,10 +45,10 @@ public class Teacher extends User {
         return courses;
     }
 
-    public void setDescriptionOfCourse(Course course, String description) {
-        // Assuming Course class has a setDescription method
-        course.setDescription(description);
+    public void setDescriptionOfCourse(Course course, String description){
+        course.setDescription(description);// Assuming Course class has a setDescription method
     }
+    
     // Set description of an assignment
     public void setDescriptionOfAssignment(Assignment assignment, String description) {
         assignment.setDescription(description);
@@ -63,21 +60,26 @@ public class Teacher extends User {
     }
 
     // Set the deadline of an assignment
-    public void setDeadlineOfAssignment(Assignment assignment, Date deadline) {
+    public void setDeadlineOfAssignment(Assignment assignment, LocalDate deadline) {
         assignment.setDeadline(deadline);
     }
 
+    //Add a new course to a teacher
+    public void addCourses(Course course) {
+        this.courses.add(course);
+    }
+    
     // Create an assignment for a course
     public void createAssignment(Course course, Assignment assignment) {
         course.addAssignment(assignment);
     }
 
     // Assign a grade for an assignment to a student
-    public void assignGradeOfAssignment(Assignment assignment, Student student) {
-        Grade grade=calculateAssignmentGrade();
-        System.out.println("Assigning grade " + grade.getGrade() + " to student " + student.getName() + " for assignment " + assignment.getTitle());
-        student.addGrade(assignment, grade);
-    }
+//    public void assignGradeOfAssignment(Assignment assignment, Student student) {
+//        Grade grade=calculateAssignmentGrade();
+//        System.out.println("Assigning grade " + grade.getGrade() + " to student " + student.getName() + " for assignment " + assignment.getTitle());
+//        student.addGrade(assignment, grade);
+//    }
     
     public void assignGradeOfCourses(Student student){
         student.calculateCourseGrade();
@@ -85,7 +87,7 @@ public class Teacher extends User {
     //calculate Assignment Grade
     public Grade calculateAssignmentGrade(){
         Grade grade = new Grade();
-        grade.setGrade(round(50));
+        grade.setGrade((int)(random()*100)+1);
         grade.setType("Assignment");
         if(grade.getGrade()>0&&grade.getGrade()<25)
             grade.setComment("fail");
@@ -100,7 +102,11 @@ public class Teacher extends User {
         System.out.println("Setting grade " + grade.getGrade() + " for student " + student.getName() + " in assignment " + assignment.getTitle());
         student.addGrade(assignment, grade);
     }
-
+    
+    //Add Assignment to the course
+    public void addAssignmentOfCourse(Assignment assignment, Course course ){
+        course.addAssignment(assignment);
+    }
     // Static method to get the number of teachers
     public static int numberOfTeacher() {
         return count;
