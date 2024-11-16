@@ -36,21 +36,13 @@ public class FileManagement {
 
     // Generic method to write a single object to a file
     public <T> void writeSingleObjectToFile(T object, String filename, Function<T, String> objectToString) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));
         writer.write(objectToString.apply(object));
         writer.newLine();
         writer.close();
     }
-
-    // Generic method to read a single object from a file
-    public <T> T readSingleObjectFromFile(String filename, Function<String, T> stringToObject) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(filename));
-        String line = reader.readLine();
-        T object = stringToObject.apply(line);
-        reader.close();
-        return object;
-    }
     
+    // To confirm the oneness of the email
     public boolean emailExists(String email, String filename) {
         File file = new File(filename);
 

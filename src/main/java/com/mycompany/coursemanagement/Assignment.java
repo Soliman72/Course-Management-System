@@ -15,7 +15,7 @@ public class Assignment {
     private String description;
     private LocalDate deadline;
     
-    // Constructor
+    // Parameterized Constructor
     public Assignment(String courseName, String title, String description, int daysUntilDeadline) {
         this.ID = ++count;
         this.courseName = courseName;
@@ -24,27 +24,46 @@ public class Assignment {
         this.deadline = LocalDate.now().plusDays(daysUntilDeadline);
     }
 
-    // Getters
+    // Getter Assignment's ID
     public int getID() {
         return ID;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public LocalDate getDeadline() {
-        return deadline;
-    }
-
+    // Getter courseName of assignment
     public String getCourseName() {
         return courseName;
     }
     
+    // Setter Assignment title
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
+    // Getter Assignment title
+    public String getTitle() {
+        return title;
+    }
+    
+    //Setter Assignment description
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    // Getter Assignment description
+    public String getDescription() {
+        return description;
+    }
+
+    // Setter Assignment deadline
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
+    // Getter Assignment deadline
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
     // Display assignment details
     public void displayAssignmentDetails() {
         System.out.println("Assignment ID: " + ID);
@@ -52,19 +71,8 @@ public class Assignment {
         System.out.println("Description: " + description);
         System.out.println("Deadline: " + deadline);
     }
-
-    //Setters
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDeadline(LocalDate deadline) {
-        this.deadline = deadline;
-    }
+    
+    // Convert object to string
     public String objectToString(){
         return this.ID + "," + this.description + "," + this.title + "," + this.deadline + "," + this.courseName;
     }

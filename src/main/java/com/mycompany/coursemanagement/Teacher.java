@@ -4,7 +4,7 @@
  */
 package com.mycompany.coursemanagement;
 
-import java.io.File;
+import java.util.Scanner;
 import java.io.IOException;
 import static java.lang.Math.random;
 import java.time.LocalDate;
@@ -19,10 +19,10 @@ public class Teacher extends User {
     private static int count = 0;
     private ArrayList<Course> courses;
 
-    // Constructor that checks email uniqueness
+    // Parameterized Constructor that checks email uniqueness
     public Teacher(String name, String email ,  String password, String specialty) {
         super(name, email, password);
-        FileManagement filemanager = new FileManagement();
+        FileManagement filemanager = new FileManagement();// To confirm the oneness of the email
         if(filemanager.emailExists(email, "teachers.txt")){
             throw new IllegalArgumentException( "this Email : " + email + "  => already in use");
         }
@@ -38,12 +38,15 @@ public class Teacher extends User {
         this.ID = ++count;  // Automatically increment the teacher ID
         this.courses = new ArrayList<>();
     }
+
     
 
-    // Getter and Setter for specialty
+    // Setter for specialty
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
     }
+    
+    // Getter for specialty 
     public String getSpecialty() {
         return specialty;
     }
@@ -58,23 +61,24 @@ public class Teacher extends User {
         return courses;
     }
 
+    // Set description of a course
     public void setDescriptionOfCourse(Course course, String description){
         course.setDescription(description);// Assuming Course class has a setDescription method
     }
     
     // Set description of an assignment
     public void setDescriptionOfAssignment(Assignment assignment, String description) {
-        assignment.setDescription(description);
+        assignment.setDescription(description);// Assuming Assignment class has a setDescription method
     }
 
     // Set title of an assignment
     public void setTitleOfAssignment(Assignment assignment, String title) {
-        assignment.setTitle(title);
+        assignment.setTitle(title);// Assuming Assignment class has a setTitle method
     }
 
     // Set the deadline of an assignment
     public void setDeadlineOfAssignment(Assignment assignment, LocalDate deadline) {
-        assignment.setDeadline(deadline);
+        assignment.setDeadline(deadline);// Assuming Assignment class has a setDeadline method
     }
 
     //Add a new course to a teacher
@@ -87,16 +91,11 @@ public class Teacher extends User {
         course.addAssignment(assignment);
     }
 
-    // Assign a grade for an assignment to a student
-//    public void assignGradeOfAssignment(Assignment assignment, Student student) {
-//        Grade grade=calculateAssignmentGrade();
-//        System.out.println("Assigning grade " + grade.getGrade() + " to student " + student.getName() + " for assignment " + assignment.getTitle());
-//        student.addGrade(assignment, grade);
-//    }
-    
+    // Assign a grade for a courses to a student
     public void assignGradeOfCourses(Student student){
         student.calculateCourseGrade();
     }
+    
     //calculate Assignment Grade
     public Grade calculateAssignmentGrade(){
         Grade grade = new Grade();
@@ -110,6 +109,7 @@ public class Teacher extends User {
             grade.setComment("Well done");
         return grade;        
     }
+    
     // Set assignment grade for a student
     public void setAssignmentGradeOfStudent(Assignment assignment, Grade grade, Student student) {
         System.out.println("Setting grade " + grade.getGrade() + " for student " + student.getName() + " in assignment " + assignment.getTitle());
@@ -120,15 +120,33 @@ public class Teacher extends User {
     public void addAssignmentOfCourse(Assignment assignment, Course course ){
         course.addAssignment(assignment);
     }
+    
     // Static method to get the number of teachers
     public static int numberOfTeacher() {
         return count;
     }
+    
+    // Method to get user input and create a Teacher object
+    public static Teacher read(){
+        Scanner in = new Scanner(System.in);
+        System.out.print("Enter name of teacher : ");
+        String name = in.nextLine();
+        System.out.print("\nEnter email of teacher : ");
+        String email = in.nextLine();
+        System.out.print("\nEnter password of teacher : ");
+        String password = in.nextLine();
+        System.out.print("\nEnter specialty of teacher : ");
+        String specialty = in.nextLine();
+        return new Teacher(name, email, password, specialty);
+    }
+    
+    // Convert object to string
     @Override
     public String objectToString() {
         return this.getName() + "," + this.getEmail() + "," + this.getPassword() + "," + this.getSpecialty();
     }
 
+    // Teacher login
     @Override
     public void logIn(String email,String password){
         FileManagement fileManager = new FileManagement();
@@ -163,6 +181,7 @@ public class Teacher extends User {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    // Teacher logout
     @Override
     public void logOut(){
         FileManagement fileManager = new FileManagement();

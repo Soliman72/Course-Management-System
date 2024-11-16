@@ -7,6 +7,9 @@ import java.util.*;
 public class Coursemanagement {
 
     public static void main(String[] args) throws IOException {
+        
+        // ===> Before runing for the second time, the file must be deleted.
+        
         FileManagement fileManager = new FileManagement();
 
         // Step 1: Create Admin
@@ -29,7 +32,7 @@ public class Coursemanagement {
         Student student2 = new Student("Jane Roe", "jane@example.com", "janeroe456");
         Student student3 = new Student("Michael Blue", "michael@example.com", "michaelblue789");
         Student student4 = new Student("Sarah White", "sarah@example.com", "sarahwhite101");
-        Student student5 = new Student("test", "test@example.com", "123123123");
+        Student student5 = new Student("shahd saed", "shahd@example.com", "shahdsaed263");
         
         // test to add student with the same email ( should be got an error )
 //        Student student6 = new Student("test", "test@example.com", "123123123");
@@ -81,11 +84,8 @@ public class Coursemanagement {
         teacher1.addAssignmentOfCourse(mathAssignment1, mathCourse);
         teacher2.addAssignmentOfCourse(physicsAssignment1, physicsCourse);
         //store assignment information
-        ArrayList<Assignment> assignments = new ArrayList<>();
-        assignments.add(mathAssignment1);
-        assignments.add(physicsAssignment1);
-        fileManager.writeToFile(assignments, "assignments.txt", assignment -> assignment.objectToString());
-        
+        fileManager.writeSingleObjectToFile(mathAssignment1, "assignments.txt", assignment -> assignment.objectToString());
+        fileManager.writeSingleObjectToFile(physicsAssignment1, "assignments.txt", assignment -> assignment.objectToString());
         // login to the website to submit assignments
         student1.logIn(student1.getEmail(), student1.getPassword());
         student2.logIn(student2.getEmail(), student2.getPassword());

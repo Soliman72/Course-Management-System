@@ -18,7 +18,7 @@ public class Course {
     private ArrayList<Assignment> assignments;
     private ArrayList<Notice> notices;
 
-    // Constructor
+    // Parameterized Constructor
     public Course(String name, Teacher teacher, String description, double price, String timePeriod) {
         this.name = name;
         this.teacher = teacher;
@@ -30,53 +30,67 @@ public class Course {
         this.notices = new ArrayList<>();
     }
 
-    // Setters and Getters
+    // Setter for name of course
     public void setCourseName(String name) {
         this.name = name;
     }
 
+    // Getter for name of course
     public String getCourseName() {
         return name;
     }
 
+    // Setter for teacher of course
+    public void setTeacher( Teacher teacher) {
+        this.teacher = teacher;
+    }
+    
+    // Getter for teacher of course
     public Teacher getTeacher() {
         return teacher;
     }
     
-    public void setTeacher( Teacher teacher) {
-        this.teacher = teacher;
+    // Setter for description of course
+    public void setDescription(String description){
+        this.description = description;
     }
-
+ 
+    // Getter for description of course
     public String getDescription() {
         return description;
     }
     
-    public void setDescription(String description){
-        this.description = description;
-    }
-            
-    public double getPrice() {
-        return price;
-    }
+    // Setter for price of course
     public void setPrice(double price) {
         this.price = price;
     }
 
-    public String getTimePeriod() {
-        return timePeriod;
+    // Getter for price of course
+    public double getPrice() {
+        return price;
     }
+    
+    // Setter for timePeriod of course
     public void setTimePeriod(String timePeriod) {
         this.timePeriod =  timePeriod;
     }
-
+    
+    // Getter for timePeriod of course
+    public String getTimePeriod() {
+        return timePeriod;
+    }
+    
+    // Getter All students in the same course
     public ArrayList<Student> getStudents() {
         return students;
     }
 
+    // Getter All assignments in the same course
     public ArrayList<Assignment> getAssignments() {
         return assignments;
     }
 
+    // Getter All notises in the same course
     public ArrayList<Notice> getNotices() {
         return notices;
     }
@@ -120,7 +134,8 @@ public class Course {
         }
     }
     
-     public void viewCourseDetails() {
+    // View Course Information
+    public void viewCourseDetails() {
         System.out.println("Course Name: " + getCourseName());
         System.out.println("Teacher: " + (teacher != null ? teacher.getName() : "No Teacher Assigned"));
         System.out.println("Description: " + getDescription());
@@ -146,7 +161,7 @@ public class Course {
         }
     }
 
-    //Remove a student from the course
+    // Remove a student from the course
     public void removeStudent(Student student) {
         if (students.contains(student)) {
             students.remove(student);
@@ -156,7 +171,7 @@ public class Course {
         }
     }
 
-    //Remove an assignment from the course
+    // Remove an assignment from the course
     public void removeAssignment(Assignment assignment) {
         if (assignments.contains(assignment)) {
             assignments.remove(assignment);
@@ -166,7 +181,7 @@ public class Course {
         }
     }
 
-    //Remove a notice from the course
+    // Remove a notice from the course
     public void removeNotice(Notice notice) {
         if (notices.contains(notice)) {
             notices.remove(notice);
@@ -175,7 +190,8 @@ public class Course {
             System.out.println("Notice: " + notice.getTitle() + " is not part of this course.");
         }
     }
-    //name teacher description price timePeriod
+    
+    // Convert object to string
     public String objectToString() {
         return this.name + "," + this.teacher.getName() + "," + this.teacher.getEmail() + "," + this.teacher.getPassword() + "," + this.teacher.getSpecialty() + "," + this.description + "," + this.price + "," + this.timePeriod;
     }

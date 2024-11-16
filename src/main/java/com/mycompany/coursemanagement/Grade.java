@@ -19,34 +19,34 @@ public class Grade {
         this.type = type;
     }
 
-    // Getter for grade
-    public int getGrade() {
-        return grade;
-    }
-
     // Setter for grade
     public void setGrade(int grade) {
         this.grade = grade;
     }
-
-    // Getter for comment
-    public String getComment() {
-        return comment;
+    
+    // Getter for grade
+    public int getGrade() {
+        return grade;
     }
 
     // Setter for comment
     public void setComment(String comment) {
         this.comment = comment;
     }
-
-    // Getter for type
-    public String getType() {
-        return type;
+    
+    // Getter for comment
+    public String getComment() {
+        return comment;
     }
 
     // Setter for type
     public void setType(String type) {
         this.type = type;
+    }
+    
+    // Getter for type
+    public String getType() {
+        return type;
     }
 
     // Display grade details

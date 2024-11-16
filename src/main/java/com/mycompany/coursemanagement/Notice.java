@@ -13,7 +13,7 @@ public class Notice {
     private String content;
     private LocalDate date;
 
-    // Constructor
+    // Parameterized Constructor
     public Notice(String courseName, String title, String content, LocalDate date) {
         this.courseName = courseName;
         this.title = title;
@@ -21,45 +21,52 @@ public class Notice {
         this.date = date;
     }
 
-    // Getters
+    // Setter for courseName
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+     
+    // Getter for courseName
+    public String getCourseName() {
+        return courseName;
+    }
+     
+     // Setter for title
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
+    // Getter for title
     public String getTitle() {
         return title;
     }
 
+    // Setter for content
+    public void setContent(String content) {
+        this.content = content;
+    }
+    
+    // Getter for content
     public String getContent() {
         return content;
     }
 
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-    
-    //Setters
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
+    // Setter for date
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
+    
+    // Getter for date
+    public LocalDate getDate() {
+        return date;
+    }
+   
     //Display the ad content
     public void displayDitals() {
         System.out.println("Notice{" + "title=" + title + ", content=" + content + ", courseName=" + courseName + ", date=" + date +" '}'");
     }
     
+    // Convert object to string
     public String objectToString(){
         return this.courseName + "," + this.title + "," + this.content + "," + this.date;
     }
