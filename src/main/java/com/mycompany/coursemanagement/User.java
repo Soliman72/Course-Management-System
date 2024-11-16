@@ -4,58 +4,57 @@
  */
 package com.mycompany.coursemanagement;
 
-import java.util.*;
-
 public abstract class User {
     // Attributes
     private String name;
+        private String email;
     private String password;
-    private String email;
     
-    //constructor
+    // Parameterized Constructor 
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-    }
-    
-    //setter and getters
-    public String getName() {
-        return name;
-    }
+    }    
+
+    // Setter User name
     public void setName(String name) {
         this.name = name;
     }
-    public String getPassword() {
-        return password;
+    
+    // Getter User name
+    public String getName() {
+        return name;
     }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public String getEmail() {
-        return email;
-    }
+    
+    // Setter User email
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    // Getter User email
+    public String getEmail() {
+        return email;
+    }
+    
+    // Setter User password
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    // Getter User password
+    public String getPassword() {
+        return password;
+    }
+
+    // Convert object(Student, Admin) to string
     public String objectToString() {
         return this.getName() + "," + this.getEmail() + "," + this.getPassword();
     }
-//    public Object StringToObject(String line){
-//        String[] parts = line.split(",");
-//        // Ensure the data has exactly 3 parts (name, email, password)
-//        if (parts.length == 3) {
-//            return new Admin(parts[0], parts[1], parts[2]);
-//        } else {
-//            // Log error message for invalid data
-//            System.err.println("Invalid admin data: " + Arrays.toString(parts));
-//            return null;  // Handle invalid data (e.g., skip this entry)
-//        }
-//    }
-    
     
     // check if the user has account in website or not 
     public abstract void logIn(String email,String password);
     
+    //Confirm the existence of the object and then delete it from the file
     public abstract void logOut();
 }

@@ -5,12 +5,9 @@
 package com.mycompany.coursemanagement;
 
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,17 +19,18 @@ public class Admin extends User {
     private static ArrayList<Course> courses = new ArrayList<>();
     private static ArrayList<Notice> notices = new ArrayList<>();
 
-    // Constructor
+    // Parameterized Constructor
     public Admin(String name, String email, String password) {
-        super(name, email, password);
-        FileManagement filemanager = new FileManagement();
+        super(name, email, password); // Call User Constructor
+        //
+        FileManagement filemanager = new FileManagement(); // To confirm the oneness of the email
         if(filemanager.emailExists(email, "admins.txt")){
             throw new IllegalArgumentException( "this Email : " + email + "  => already in use");
         }
     }
     
     public Admin(String name, String email, String password , boolean isFromFile) {
-        super(name, email, password);
+        super(name, email, password);// Call User Constructor
     }
     
     // Getter All students registered in the Course-Management-System
@@ -83,23 +81,23 @@ public class Admin extends User {
 
     // Set the courses of a teacher
     public void setCoursesOfTeacher(Teacher teacher, Course course) {
-        teacher.getCourses().add(course);
+        teacher.getCourses().add(course); // Add a new course to teacher's list
     }
 
     // Set the courses of a student
     public void setCoursesOfStudent(Student student, Course course) {
-        student.enrollCourse(course);
+        student.enrollCourse(course); // Assuming Student class has an enrollCourse method
     }
 
     // Set the name of a course
     public void setNameOfCourse(Course course, String name) {
-        course.setCourseName(name);
+        course.setCourseName(name); // Assuming Course class has an setCourseName method
     }
 
     // Set students for a course
     public void setStudentsOfCourse(Course course, Student student) {
         course.enrollStudent(student); // Assuming Course class has an enrollStudent method
-        student.enrollCourse(course);
+        student.enrollCourse(course); // Assuming Student class has an enrollCourse method
     }
 
     // Set the price of a course
@@ -115,7 +113,7 @@ public class Admin extends User {
     // Add a new notice
     public void addNotice(Notice notice, Course course) {
         notices.add(notice);// Assuming Course class has an addNotice method
-        course.addNotice(notice);
+        course.addNotice(notice);// Assuming Course class has an addNotice method
     }
 
     // Set the title of a notice
@@ -170,6 +168,19 @@ public class Admin extends User {
         }
     }
     
+    // Method to get user input and create a Admin object
+    public static Admin read(){
+        Scanner in = new Scanner(System.in);
+        System.out.print("Enter name of admin : ");
+        String name = in.nextLine();
+        System.out.print("\nEnter email of admin : ");
+        String email = in.nextLine();
+        System.out.print("\nEnter password of admin : ");
+        String password = in.nextLine();
+        return new Admin(name, email, password);
+    }
+    
+    //Admin login
     @Override
     public void logIn(String email,String password){
         FileManagement fileManager = new FileManagement();
@@ -204,7 +215,8 @@ public class Admin extends User {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    //Admin logout
     @Override
     public void logOut(){
         FileManagement fileManager = new FileManagement();
@@ -233,9 +245,9 @@ public class Admin extends User {
             if(found){
                 // Rewrite the updated list to the file
                 fileManager.writeToFile(admins, "admins.txt", admin -> admin.objectToString());
-                System.out.println("Logged out successfully.");
+                System.out.println(this.getName() + "Logged out successfully.");
             }else {
-                System.out.println("No matching student found for logout.");
+                System.out.println("No matching admin found for logout.");
             }
         }catch (IOException ex) {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);

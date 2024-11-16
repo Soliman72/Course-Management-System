@@ -4,7 +4,6 @@
  */
 package com.mycompany.coursemanagement;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
@@ -18,10 +17,10 @@ public class Student extends User {
     private HashMap<Assignment,Grade> assignmentGrade;
     private HashMap<Course,Grade> courseGrade;
     
-    //constructor
+    // Parameterized Constructor
     public Student(String name ,String email , String password) {
         super(name,email ,password);
-        FileManagement filemanager = new FileManagement();
+        FileManagement filemanager = new FileManagement();// To confirm the oneness of the email
         if(filemanager.emailExists(email, "students.txt")){
             throw new IllegalArgumentException( "this Email : " + email + "  => already in use");
         }
@@ -40,18 +39,22 @@ public class Student extends User {
         this.courseGrade=new HashMap<>();
     }
     
- // Getters
+    // Getter student's ID
     public int getID() {
         return ID;
     }
+    
+    // Getter all courses in which the student is registered
     public ArrayList<Course> getCourses() {
         return courses;
     }
 
+    // Getter All assignments received with grades
     public HashMap<Assignment, Grade> getAssignmentGrade() {
         return assignmentGrade;
     }
 
+    // Getter All courses registered with their grades
     public HashMap<Course, Grade> getCourseGrade() {
         return courseGrade;
     }
@@ -183,7 +186,19 @@ public class Student extends User {
         else System.out.println("This student did not submitted assignment");
     }
     
+    // Method to get user input and create a Student object
+    public static Student read(){
+        Scanner in = new Scanner(System.in);
+        System.out.print("Enter name of student : ");
+        String name = in.nextLine();
+        System.out.print("\nEnter email of student : ");
+        String email = in.nextLine();
+        System.out.print("\nEnter password of student : ");
+        String password = in.nextLine();
+        return new Student(name, email, password);
+    }
     
+    // Student login
     @Override
     public void logIn(String email,String password){
         FileManagement fileManager = new FileManagement();
@@ -218,6 +233,7 @@ public class Student extends User {
         }
     }
     
+    // Student logout
     @Override
     public void logOut(){
         FileManagement fileManager = new FileManagement();
