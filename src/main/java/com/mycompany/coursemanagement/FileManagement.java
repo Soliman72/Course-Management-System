@@ -7,6 +7,8 @@ package com.mycompany.coursemanagement;
 import java.io.*;
 import java.util.*;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FileManagement {
 
@@ -48,4 +50,31 @@ public class FileManagement {
         reader.close();
         return object;
     }
+    
+    public boolean emailExists(String email, String filename) {
+        File file = new File(filename);
+
+        // Check if the file exists before trying to read it
+        if (!file.exists()) {
+            return false;
+        }
+
+        try {
+            // Read each line as a simple String object
+            ArrayList<String> lines = readFromFile(filename, line -> line);
+
+            for (String line : lines) {
+                String[] parts = line.split(",");
+                // Email is the second part of the line
+                if (parts.length > 1 && parts[1].trim().equals(email)) {
+                    return true;
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FileManagement.class.getName()).log(Level.SEVERE, "Failed to read from " + filename, ex);
+        }
+        return false;
+    }
+
+
 }

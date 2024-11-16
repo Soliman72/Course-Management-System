@@ -19,13 +19,26 @@ public class Teacher extends User {
     private static int count = 0;
     private ArrayList<Course> courses;
 
-    // Constructor
-    public Teacher(String name, String password, String email, String specialty) {
+    // Constructor that checks email uniqueness
+    public Teacher(String name, String email ,  String password, String specialty) {
+        super(name, email, password);
+        FileManagement filemanager = new FileManagement();
+        if(filemanager.emailExists(email, "teachers.txt")){
+            throw new IllegalArgumentException( "this Email : " + email + "  => already in use");
+        }
+        this.specialty = specialty;
+        this.ID = ++count;  // Automatically increment the teacher ID
+        this.courses = new ArrayList<>();
+    }
+    
+    // Overloaded constructor for loading from file without checking email
+    public Teacher(String name, String email ,  String password, String specialty , boolean isFromFile) {
         super(name, email, password);
         this.specialty = specialty;
         this.ID = ++count;  // Automatically increment the teacher ID
         this.courses = new ArrayList<>();
     }
+    
 
     // Getter and Setter for specialty
     public void setSpecialty(String specialty) {
@@ -133,12 +146,19 @@ public class Teacher extends User {
                 }
                 
             }); 
+            boolean found = false;
             for(Teacher teacher : teachers){
-                if((email == null ? teacher.getEmail() == null : email.equals(teacher.getEmail()))&&(password == null ? teacher.getPassword() == null : password.equals(teacher.getPassword())))
-                    System.out.println(teacher.getName()+"Logged in");
-                else
-                    System.out.println("Incorrect Email or Password");
+                if(( teacher!=null && email.equals(teacher.getEmail()))&&(password.equals(teacher.getPassword()))){
+                    System.out.println(teacher.getName()+" logged in successfully. ");   
+                    found = true;
+                    break;
+                }
             }
+            
+            if(!found){
+                System.out.println("Incorrect Email or Password!");
+            }
+            
         }catch (IOException ex) {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -159,14 +179,22 @@ public class Teacher extends User {
                     return null;  // Handle invalid data (e.g., skip this entry)
                 }
             }); 
-            for(Teacher teacher : teachers){
-                if(this.equals(teacher))
-                    teachers.remove(this);
+            boolean found = false;
+            for(int i=0 ; i<teachers.size() ; i++){
+                if (this.getEmail().equals(teachers.get(i).getEmail())){
+                    teachers.remove(i);
+                    i--; // Decrement the index to adjust for the shift 
+                    found=true;
+                }
             }
-            File file = new File("teachers.txt");
-            if (file.exists())
-                file.delete();
-            fileManager.writeToFile(teachers, "teachers.txt", teacher -> teacher.objectToString());
+            
+            if(found){
+                // Rewrite the updated list to the file
+                fileManager.writeToFile(teachers, "teachers.txt", teacher -> teacher.objectToString());
+                System.out.println("Logged out successfully.");
+            }else {
+                System.out.println("No matching student found for logout.");
+            }
         }catch (IOException ex) {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }

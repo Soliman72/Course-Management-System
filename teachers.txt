@@ -1,2 +1,2 @@
-Mr. Smith,teacher123,smith@example.com,Mathematics
-Ms. Johnson,teacher456,johnson@example.com,Physics
+Mr. Smith,smith@example.com,teacher123,Mathematics
+Ms. Johnson,johnson@example.com,teacher456,Physics

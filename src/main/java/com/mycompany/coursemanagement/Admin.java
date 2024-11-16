@@ -25,6 +25,10 @@ public class Admin extends User {
     // Constructor
     public Admin(String name, String email, String password) {
         super(name, email, password);
+        FileManagement filemanager = new FileManagement();
+        if(filemanager.emailExists(email, "admins.txt")){
+            throw new IllegalArgumentException( "this Email : " + email + "  => already in use");
+        }
     }
     
     // Getter All students registered in the Course-Management-System
@@ -179,12 +183,19 @@ public class Admin extends User {
                 }
                 
             }); 
+            boolean found = false;
             for(Admin admin : admins){
-                if((email == null ? admin.getEmail() == null : email.equals(admin.getEmail()))&&(password == null ? admin.getPassword() == null : password.equals(admin.getPassword())))
+                if( admin!=null && (email.equals(admin.getEmail()))&&(password.equals(admin.getPassword()))){
                     System.out.println(admin.getName()+"Logged in");
-                else
-                    System.out.println("Incorrect Email or Password");
+                    found=true;
+                    break;
+                }
             }
+            
+            if(!found){
+                System.out.println("Incorrect Email or Password");
+            }
+            
         }catch (IOException ex) {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -206,14 +217,22 @@ public class Admin extends User {
                     return null;  // Handle invalid data (e.g., skip this entry)
                 }
             }); 
-            for(Admin admin : admins){
-                if(this.equals(admin))
-                    admins.remove(this);
+            boolean found = false;
+            for(int i=0 ; i<admins.size() ; i++){
+                if (this.getEmail().equals(admins.get(i).getEmail())){
+                    admins.remove(i);
+                    i--; // Decrement the index to adjust for the shift 
+                    found=true;
+                }
             }
-            File file = new File("admins.txt");
-            if (file.exists())
-                file.delete();
-            fileManager.writeToFile(admins, "admins.txt", admin -> admin.objectToString());
+            
+            if(found){
+                // Rewrite the updated list to the file
+                fileManager.writeToFile(admins, "admins.txt", admin -> admin.objectToString());
+                System.out.println("Logged out successfully.");
+            }else {
+                System.out.println("No matching student found for logout.");
+            }
         }catch (IOException ex) {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }

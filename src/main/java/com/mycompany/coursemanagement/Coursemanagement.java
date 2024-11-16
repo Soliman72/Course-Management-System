@@ -23,17 +23,24 @@ public class Coursemanagement {
         admin1.addTeacher(teacher2);
         //Storing teachers' information
         fileManager.writeToFile(Admin.getTeachers(), "teachers.txt", teacher -> teacher.objectToString());
-
+        
         // Step 3: Create Students
         Student student1 = new Student("John Doe", "john@example.com", "johndoe123");
         Student student2 = new Student("Jane Roe", "jane@example.com", "janeroe456");
         Student student3 = new Student("Michael Blue", "michael@example.com", "michaelblue789");
         Student student4 = new Student("Sarah White", "sarah@example.com", "sarahwhite101");
+        Student student5 = new Student("test", "test@example.com", "123123123");
+        
+        // test to add student with the same email ( should be got an error )
+//        Student student6 = new Student("test", "test@example.com", "123123123");
+        
+
         // Add students using Admin
         admin1.addStudent(student1);
         admin1.addStudent(student2);
         admin1.addStudent(student3);
         admin1.addStudent(student4);
+        admin1.addStudent(student5);
         //Storing students' information
         fileManager.writeToFile(Admin.getStudents(), "students.txt", student -> student.objectToString());
 
@@ -84,6 +91,9 @@ public class Coursemanagement {
         student2.logIn(student2.getEmail(), student2.getPassword());
         student3.logIn(student3.getEmail(), student3.getPassword());
         student4.logIn(student4.getEmail(), student4.getPassword());
+        student5.logIn(student5.getEmail(), student5.getPassword());
+        
+        student5.logOut();
         // Step 7: Submitting assignment and giving grades by teachers if the student is registered for the course
         student1.submitAssignment(mathAssignment1, mathCourse, teacher1);
         student2.submitAssignment(mathAssignment1, mathCourse, teacher1);
@@ -127,18 +137,19 @@ public class Coursemanagement {
         ArrayList<Teacher> teachersFromFile = fileManager.readFromFile("teachers.txt", line -> {
             String[] parts = line.split(",");
             if (parts.length >= 3) {
-                return new Teacher(parts[0], parts[1], parts[2], parts[2]);
+                return new Teacher(parts[0], parts[1], parts[2], parts[2] , true);
             } else {
                 System.err.println("Invalid teacher data: " + Arrays.toString(parts));
                 return null;  // Or handle the error in a way that suits your logic
             }
         });
+        
         ArrayList<Student> studentsFromFile = fileManager.readFromFile("students.txt", line -> {
             String[] parts = line.split(",");
 
             // Ensure the data has exactly 3 parts (name, email, password)
             if (parts.length >0) {
-                return new Student(parts[0], parts[1], parts[2]);
+                return new Student(parts[0], parts[1], parts[2] , true);
             } else {
                 // Log error message for invalid data
                 System.err.println("Invalid student data: " + Arrays.toString(parts));
@@ -148,7 +159,7 @@ public class Coursemanagement {
         ArrayList<Course> coursesFromFile = fileManager.readFromFile("courses.txt", line -> {
             String[] parts = line.split(",");
             if (parts.length > 0) {
-                return new Course(parts[0], new Teacher(parts[1], parts[2], parts[3], parts[4]),parts[5], Double.parseDouble(parts[6]), parts[7]);
+                return new Course(parts[0], new Teacher(parts[1], parts[2], parts[3], parts[4] , true),parts[5], Double.parseDouble(parts[6]), parts[7]);
             } else {
                 System.err.println("Invalid course data: " + Arrays.toString(parts));
                 return null;  // Or handle the error in a way that suits your logic
