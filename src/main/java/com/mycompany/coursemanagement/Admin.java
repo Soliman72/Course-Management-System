@@ -31,6 +31,10 @@ public class Admin extends User {
         }
     }
     
+    public Admin(String name, String email, String password , boolean isFromFile) {
+        super(name, email, password);
+    }
+    
     // Getter All students registered in the Course-Management-System
     public static ArrayList<Student> getStudents() {
         return students;
@@ -175,7 +179,7 @@ public class Admin extends User {
                 
                 // Ensure the data has exactly 3 parts (name, email, password)
                 if (parts.length >0) {
-                    return new Admin(parts[0], parts[1], parts[2]);
+                    return new Admin(parts[0], parts[1], parts[2] , true);
                 } else {
                     // Log error message for invalid data
                     System.err.println("Invalid admin data: " + Arrays.toString(parts));
@@ -210,7 +214,7 @@ public class Admin extends User {
                 
                 // Ensure the data has exactly 3 parts (name, email, password)
                 if (parts.length >0) {
-                    return new Admin(parts[0], parts[1], parts[2]);
+                    return new Admin(parts[0], parts[1], parts[2] , true);
                 } else {
                     // Log error message for invalid data
                     System.err.println("Invalid admin data: " + Arrays.toString(parts));

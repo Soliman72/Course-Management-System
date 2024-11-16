@@ -19,8 +19,8 @@ public class Student extends User {
     private HashMap<Course,Grade> courseGrade;
     
     //constructor
-    public Student(String name,String password ,String email) {
-        super(name,password,email);
+    public Student(String name ,String email , String password) {
+        super(name,email ,password);
         FileManagement filemanager = new FileManagement();
         if(filemanager.emailExists(email, "students.txt")){
             throw new IllegalArgumentException( "this Email : " + email + "  => already in use");
@@ -32,8 +32,8 @@ public class Student extends User {
     }
     
     // Overloaded constructor for loading from file without checking email
-    public Student(String name,String password ,String email , boolean isFromFile) {
-        super(name,password,email);
+    public Student(String name,String email  ,String password , boolean isFromFile) {
+        super(name,email ,password);
         this.ID = ++count;  // Automatically increment the student ID
         this.courses=new ArrayList<>();
         this.assignmentGrade=new HashMap<>();
@@ -193,7 +193,7 @@ public class Student extends User {
                 
                 // Ensure the data has exactly 3 parts (name, email, password)
                 if (parts.length >0) {
-                    return new Student(parts[0], parts[1], parts[2]);
+                    return new Student(parts[0], parts[1], parts[2] , true);
                 } else {
                     // Log error message for invalid data
                     System.err.println("Invalid student data: " + Arrays.toString(parts));
@@ -227,7 +227,7 @@ public class Student extends User {
                 
                 // Ensure the data has exactly 3 parts (name, email, password)
                 if (parts.length >0) {
-                    return new Student(parts[0], parts[1], parts[2]);
+                    return new Student(parts[0], parts[1], parts[2] , true);
                 } else {
                     // Log error message for invalid data
                     System.err.println("Invalid admin data: " + Arrays.toString(parts));

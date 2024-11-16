@@ -138,7 +138,7 @@ public class Teacher extends User {
                 
                 // Ensure the data has exactly 4 parts (name, email, password, specialty)
                 if (parts.length >0) {
-                    return new Teacher(parts[0], parts[1], parts[2], parts[3]);
+                    return new Teacher(parts[0], parts[1], parts[2], parts[3] , true);
                 } else {
                     // Log error message for invalid data
                     System.err.println("Invalid teacher data: " + Arrays.toString(parts));
@@ -172,7 +172,7 @@ public class Teacher extends User {
                 
                 // Ensure the data has exactly 4 parts (name, email, password, specialty)
                 if (parts.length >0) {
-                    return new Teacher(parts[0], parts[1], parts[2], parts[3]);
+                    return new Teacher(parts[0], parts[1], parts[2], parts[3] , true);
                 } else {
                     // Log error message for invalid data
                     System.err.println("Invalid admin data: " + Arrays.toString(parts));
