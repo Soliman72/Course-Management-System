@@ -1,0 +1,6 @@
+Mr. Smith,smith@example.com,teacher123,Mathematics
+Ms. Johnson,johnson@example.com,teacher456,Physics
+Dr. Emily Stone,emilystone@example.com,emilystone789,Chemistry
+Mrs. Clara Rose,clararose@example.com,clararose555,English Literature
+Mr. James Harper,jamesharper@example.com,jamesharper999,Biology
+Ms. Olivia ,oliviaclark@example.com,oliviaclark888,Philosophy

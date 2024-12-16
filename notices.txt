@@ -1,0 +1,12 @@
+Mathematics,Math Course Enrollment Announcement,We are pleased to announce the launch of an advanced Math course for all levels. The course will begin on Sunday; November 20; 2024; and will cover topics such as Calculus; Algebra; and Geometry. The course will be conducted online; and study materials will be provided via our online learning platform.,2024-12-12
+Physics,Physics Course Enrollment Announcement,We are excited to announce the start of an Advanced Physics course for students at all levels. The course will begin on Saturday; November 22; 2024; and will cover topics including Mechanics; Thermodynamics; and Electromagnetism. The course will be held online and all course materials will be available on our e-learning platform.,2024-12-9
+CS,Final Project Submission,The deadline for submitting your final project is December 18/2024. Late submissions will not be accepted.,2024-12-10
+Mathematics,Midterm Exam Schedule,The midterm exam for the Mathematics course will be held on December 20/2024. Please check the exam timetable for details.,2024-12-13
+Physics,Class Rescheduled,The lecture scheduled for December 15/2024; has been rescheduled to December 17/2024; at the same time. Please update your calendars.,2024-12-12
+English Literature,New Reading Materials Uploaded,Additional reading materials for the English Literature course have been uploaded to the course portal. Please review them before the next lecture.,2024-12-13
+Software Engineering,Workshop on Agile Methodologies,A workshop on Agile Methodologies will be conducted on December 20/2024; at 10:00 AM in Room 205. Attendance is mandatory.,2024-12-10
+General Announcement,Christmas Holidays,All classes will be suspended from December 25/2024; to December 27/2024; for the Christmas holidays. Wishing everyone a joyful celebration!,2024-12-13
+Chemistry,Exam Results Published,The results for the Chemistry midterm exam have been published. Please check the course portal to view your grades.,2024-12-7
+Biology,Biology Seminar,A seminar on recent advances in Biology will be held on January 15/2025; at 2:00 PM in Room 302.,2024-12-14
+Philosophy,Philosophy Discussion Forum,A virtual discussion forum on existentialism will be held on January 10/2025.,2024-12-15
+test,test,test,2024-12-16

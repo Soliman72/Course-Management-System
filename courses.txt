@@ -1,0 +1,6 @@
+Mathematics,Mrs. Clara Rose,clararose@example.com,clararose555,English Literature,Poetry and Prose Analysis,150.0,two months
+Software Engineering,Dr. Emily Stone,emilystone@example.com,emilystone789,Software Engineering,Agile Methodologies and Scrum,300.0,three months
+Biology,Mr. James Harper,jamesharper@example.com,jamesharper999,Biology,Cell Biology and Genetics,200.0,three months
+Philosophy,Ms. Olivia Clark,oliviaclark@example.com,oliviaclark888,Philosophy,Existentialism and Ethics,180.0,two months
+Chemistry,Dr. Emily Stone,emilystone@example.com,emilystone789,Chemistry,Organic and Inorganic Chemistry,220.0,three months
+Physics,Ms. Johnson,johnson@example.com,teacher456,Physics,Mechanics and Thermodynamics,250.0,three months
